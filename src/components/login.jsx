@@ -9,11 +9,13 @@ import { auth } from "../utlis/firebase";
 import { addUser } from "../utlis/userSlice";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { Eye, EyeOff } from "lucide-react";
 
 const Login = () => {
   const [isSigninForm, setIsSigninForm] = useState(true);
   const [errorMessge, SetErrorMessge] = useState(null);
   const [passwordMessage, setPasswordMessage] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -23,6 +25,7 @@ const Login = () => {
   const fullname = useRef(null);
 
   const handlePasswordChange = () => {
+    if (isSigninForm) return;
     const value = password.current.value;
     const strongRegex =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$/;
@@ -47,8 +50,7 @@ const Login = () => {
         email.current.value,
         password.current.value
       )
-        .then((userCredential) => {
-          const user = userCredential.user;
+        .then(() => {
           updateProfile(auth.currentUser, {
             displayName: fullname.current.value,
           })
@@ -81,6 +83,8 @@ const Login = () => {
 
   const toggleSignInForm = () => {
     setIsSigninForm(!isSigninForm);
+    setPasswordMessage("");
+    setShowPassword(false);
   };
 
   return (
@@ -106,17 +110,30 @@ const Login = () => {
               placeholder="Email"
               className="w-full p-2 rounded bg-gray-200 text-black focus:outline-none"
             />
-            <input
-              ref={password}
-              type="password"
-              placeholder="Password"
-              onChange={handlePasswordChange}
-              className="w-full p-2 rounded bg-gray-200 text-black focus:outline-none"
-            />
 
-            {passwordMessage && (
+            <div className="relative w-full">
+              <input
+                ref={password}
+                type={showPassword ? "text" : "password"}
+                placeholder="Password"
+                onChange={handlePasswordChange}
+                className="w-full p-2 rounded bg-gray-200 text-black focus:outline-none"
+              />
+              {!isSigninForm && (
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute inset-y-0 right-2 flex items-center text-gray-700"
+                >
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
+              )}
+            </div>
+
+            {!isSigninForm && passwordMessage && (
               <p className="text-yellow-300 text-sm">{passwordMessage}</p>
             )}
+
             <p className="text-red-500 font-bold text-sm sm:text-lg py-1 sm:py-2">
               {errorMessge}
             </p>
