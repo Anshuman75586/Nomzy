@@ -68,8 +68,10 @@ const RestaurantMenu = () => {
               <p className="text-gray-800 font-semibold">₹{item.price}</p>
               <button
                 className="mt-2 px-4 py-1 bg-gray-800 text-white rounded hover:bg-orange-500"
-                onClick={() => handleAddItem(item)}
-              >
+                onClick={() => {
+                  handleAddItem(item);
+                  alert("Item Added successfully!");
+                }}
                 Add to Cart
               </button>
             </div>
