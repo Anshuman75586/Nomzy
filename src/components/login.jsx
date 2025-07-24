@@ -13,6 +13,7 @@ import { useDispatch } from "react-redux";
 const Login = () => {
   const [isSigninForm, setIsSigninForm] = useState(true);
   const [errorMessge, SetErrorMessge] = useState(null);
+  const [passwordMessage, setPasswordMessage] = useState("");
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -20,6 +21,20 @@ const Login = () => {
   const email = useRef(null);
   const password = useRef(null);
   const fullname = useRef(null);
+
+  const handlePasswordChange = () => {
+    const value = password.current.value;
+    const strongRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$/;
+
+    if (!strongRegex.test(value)) {
+      setPasswordMessage(
+        "Password must be 8-16 chars, include uppercase, lowercase, number, and special character."
+      );
+    } else {
+      setPasswordMessage("Strong password ✅");
+    }
+  };
 
   const handleButtonClick = () => {
     const message = checkValidData(email.current.value, password.current.value);
@@ -55,7 +70,7 @@ const Login = () => {
         email.current.value,
         password.current.value
       )
-        .then((userCredential) => {
+        .then(() => {
           navigate("/home");
         })
         .catch((error) => {
@@ -95,8 +110,13 @@ const Login = () => {
               ref={password}
               type="password"
               placeholder="Password"
+              onChange={handlePasswordChange}
               className="w-full p-2 rounded bg-gray-200 text-black focus:outline-none"
             />
+
+            {passwordMessage && (
+              <p className="text-yellow-300 text-sm">{passwordMessage}</p>
+            )}
             <p className="text-red-500 font-bold text-sm sm:text-lg py-1 sm:py-2">
               {errorMessge}
             </p>
