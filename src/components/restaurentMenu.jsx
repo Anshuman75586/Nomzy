@@ -19,9 +19,8 @@ const RestaurantMenu = () => {
     return true;
   });
 
-  // ✅ This should be placed AFTER restaurant is validated, and filteredMenu is ready
   const handleAddItem = (item) => {
-    dispatch(addItem(item)); // item comes from map() scope
+    dispatch(addItem(item));
   };
 
   return (
@@ -68,7 +67,10 @@ const RestaurantMenu = () => {
               <p className="text-gray-800 font-semibold">₹{item.price}</p>
               <button
                 className="mt-2 px-4 py-1 bg-gray-800 text-white rounded hover:bg-orange-500"
-                onClick={() => handleAddItem(item)}
+                onClick={() => {
+                  handleAddItem(item);
+                  alert("Item Added successfully!");
+                }}
               >
                 Add to Cart
               </button>
