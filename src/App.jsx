@@ -15,8 +15,7 @@ const App = () => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         const { uid, email, fullname } = user;
-        dispatch(addUser({ uid: uid, email: email, fullname: fullname }));
-        // ...
+        dispatch(addUser({ uid, email, fullname }));
       } else {
         dispatch(removeUser());
       }
@@ -24,11 +23,11 @@ const App = () => {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div>
       <Header />
-      <main className="flex-1">
-        <Outlet />
-      </main>
+
+      <Outlet />
+
       <Footer />
     </div>
   );

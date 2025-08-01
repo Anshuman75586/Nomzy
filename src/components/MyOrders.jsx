@@ -4,7 +4,7 @@ const MyOrders = () => {
   const orders = useSelector((store) => store.orders.items);
 
   return (
-    <div className="p-6 max-w-4xl mx-auto">
+    <div className="p-6 max-w-4xl mx-auto min-h-[70vh]">
       <h2 className="text-2xl font-bold mb-6">My Orders</h2>
 
       {orders.length === 0 ? (

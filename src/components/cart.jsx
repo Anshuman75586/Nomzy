@@ -31,7 +31,7 @@ const Cart = () => {
   const totalAmount = cartItems.reduce((acc, item) => acc + item.price, 0);
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
+    <div className="max-w-4xl mx-auto p-6 min-h-[70vh]">
       <h1 className="text-3xl font-bold mb-6 text-orange-600">🛒 Your Cart</h1>
 
       {cartItems.length === 0 ? (
