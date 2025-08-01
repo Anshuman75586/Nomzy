@@ -25,9 +25,13 @@ const App = () => {
   return (
     <div>
       <Header />
+<<<<<<< HEAD
 
       <Outlet />
 
+=======
+      <Outlet />
+>>>>>>> 7a1e2ddaa01e5b01873035da095e90bde7b29c83
       <Footer />
     </div>
   );
