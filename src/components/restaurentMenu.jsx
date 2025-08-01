@@ -19,9 +19,8 @@ const RestaurantMenu = () => {
     return true;
   });
 
-  // ✅ This should be placed AFTER restaurant is validated, and filteredMenu is ready
   const handleAddItem = (item) => {
-    dispatch(addItem(item)); // item comes from map() scope
+    dispatch(addItem(item));
   };
 
   return (
@@ -72,6 +71,7 @@ const RestaurantMenu = () => {
                   handleAddItem(item);
                   alert("Item Added successfully!");
                 }}
+              >
                 Add to Cart
               </button>
             </div>
